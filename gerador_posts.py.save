@@ -1,0 +1,126 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+LINK = "https://drive.google.com/file/d/1a1yp5n6WmknxGularCyUd3DNb9K56M5h/view?usp=drive_link"
+
+posts = [
+    ["Segunda 11:00", "Lancamento", """🚀 CHEGOU O PIXFLOW!
+O Gerador de QR Code PIX mais rapido do Brasil! 💚
+
+✅ Super leve e rapido
+✅ Interface simples e intuitiva
+✅ Ideal para comerciantes e freelancers
+✅ Disponivel para Android e Linux
+
+🔓 VERSAO FREE: Teste gratis!
+⭐ VERSAO PREMIUM: R$ 29,90 (pagamento unico!)
+
+📥 BAIXE AGORA:
+""" + LINK + """
+
+#PixFlow #Pix #Android #Vendas #Empreendedorismo"""],
+
+    ["Terca 15:00", "Freelancers", """💡 DICA PARA FREELANCERS!
+
+Agilize suas cobrancas em segundos! ⚡
+
+Com o PixFlow voce:
+✅ Gera QR Code PIX instantaneo
+✅ Cobra sem depender do app do banco
+✅ Trabalha de forma mais profissional
+
+🔓 Teste gratis: """ + LINK + """
+
+#Freelancer #PixFlow #Produtividade #Vendas"""],
+
+    ["Quarta 19:00", "Comerciantes", """🎯 ATENCAO COMERCIANTES!
+
+Feirantes, vendedores, prestadores de servico...
+O PixFlow foi feito para VOCE! 💚
+
+✅ Cobre clientes em segundos
+✅ Sem complicacao de app bancario
+✅ Interface simples e direta
+
+📥 Baixe gratis: """ + LINK + """
+
+#Comerciante #PixFlow #Vendas #PequenosNegocios"""],
+
+    ["Quinta 12:00", "Premium", """⭐ CONHECA A VERSAO PREMIUM DO PIXFLOW!
+
+Por apenas R$ 29,90 (pagamento unico):
+
+✅ QR Codes ILIMITADOS
+✅ Sem secao de doacao
+✅ Uso comercial profissional
+✅ Licenca vitalicia
+
+📥 Teste a versao Free: """ + LINK + """
+
+#PixFlowPremium #Vendas #Empreendedorismo"""],
+
+    ["Sexta 17:00", "Sextou", """🎉 SEXTOU COM PIXFLOW!
+
+Fim de semana e epoca de vendas! 💰
+Garanta que voce esta pronto para cobrar rapido!
+
+✅ Gere QR Codes em segundos
+✅ Interface simples e rapida
+✅ Android e Linux
+
+🔓 Versao Free: """ + LINK + """
+
+#Sextou #PixFlow #Vendas #FimDeSemana"""],
+
+    ["Sabado 10:00", "Android", """📱 PIXFLOW NO SEU ANDROID!
+
+Leve seu gerador de QR Code PIX para qualquer lugar! ⚡
+
+✅ App leve (apenas 20MB)
+✅ Interface otimizada para mobile
+✅ Geracao instantanea de QR Codes
+
+📥 Baixe o APK gratis: """ + LINK + """
+
+#Android #PixFlow #Mobile #Pix #App"""],
+
+    ["Domingo 14:00", "Linux", """🐧 USUARIOS LINUX, ESSE E PARA VOCES!
+
+PixFlow tambem esta disponivel para Linux! 💚
+
+✅ Ubuntu, Debian, Fedora, Zorin OS e mais
+✅ Executavel portatil (sem instalacao)
+✅ Interface moderna e responsiva
+
+📥 Baixe o ZIP: """ + LINK + """
+
+#Linux #PixFlow #Tecnologia #Desktop"""],
+]
+
+print("=" * 50)
+print("  CALENDARIO DE POSTAGENS - PIXFLOW")
+print("=" * 50)
+
+arquivo = open("calendario_posts_CORRIGIDO.txt", "w")
+
+for i in range(30):
+    post = posts[i % 7]
+    dia = i + 1
+    
+    texto = f"""
+{'='*50}
+POST {dia}
+Quando: {post[0]}
+Tema: {post[1]}
+{'='*50}
+
+{post[2]}
+
+"""
+    print(f"✅ Post {dia} gerado: {post[1]}")
+    arquivo.write(texto)
+
+arquivo.close()
+print("\n🎉 PRONTO! Arquivo 'calendario_posts_CORRIGIDO.txt' criado!")
+print("📂 Ele esta na pasta: ~/pixflow_app/")
+print("\n✨ AGORA COM MENOS HASHTAGS (dentro do limite)
