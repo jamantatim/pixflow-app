@@ -49,3 +49,6 @@ build/
 .pub/
 .idea/
 *.iml
+linux/flutter/ephemeral/
+windows/flutter/ephemeral/
+macos/Flutter/ephemeral/
