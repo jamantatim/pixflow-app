@@ -1,0 +1,30 @@
+name: Build Windows Release
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v3
+        
+      - name: Instalar o Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          
+      - name: Baixar as dependências
+        run: flutter pub get
+        
+      - name: Compilar para Windows
+        run: flutter build windows --release
+        
+      - name: Salvar o App pronto
+        uses: actions/upload-artifact@v3
+        with:
+          name: PixFlow-Windows-Release
+          path: build/windows/x64/runner/Release/
