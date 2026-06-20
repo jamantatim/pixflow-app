@@ -6,7 +6,7 @@ import 'screens/home_screen.dart';
 // 🔑 CHAVE MESTRA: ALTERE APENAS ESTA LINHA NA HORA DE COMPILAR
 // false = Gera a Versão FREE (com limites, doação e botão de info)
 // true  = Gera a Versão PREMIUM (ilimitada, sem doação, sem limites)
-const bool IS_PREMIUM_VERSION = true; 
+const bool IS_PREMIUM_VERSION = false; 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
