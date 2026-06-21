@@ -99,3 +99,14 @@ flutter_launcher_icons:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+  flutter_launcher_icons: "^0.13.1"
+
+  windows:
+    generate: true
+    image_path: "assets/logo.png"
+    icon_size: 48
+  linux:
+    generate: true
+    image_path: "assets/logo.png"
+
