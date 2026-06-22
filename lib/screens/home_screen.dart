@@ -219,25 +219,126 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  Future<void> _handleGenerate() async {
-    if (!_validateFields()) return;
-    
-    if (!_isPremium && _freeQrCount >= 5) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('⚠️ Limite Free atingido! Adquira a versão Premium.')));
-      return;
-    }
-    
-    _generatePayload();
-    _startTimer();
-    
-    if (!_isPremium) {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setInt('free_qr_count', _freeQrCount + 1);
-    }
-    
-    _loadData();
-    _scrollToQrCode(); 
+ Future<void> _handleGenerate() async {
+  if (!_validateFields()) return;
+  
+  // ✅ VERIFICA SE ATINGIU O LIMITE FREE
+  if (!_isPremium && _freeQrCount >= 5) {
+    _showLimitReachedDialog();
+    return;
   }
+  
+  _generatePayload();
+  _startTimer();
+  
+  if (!_isPremium) {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('free_qr_count', _freeQrCount + 1);
+  }
+  
+  _loadData();
+  _scrollToQrCode(); 
+}
+
+// ✅ POPUP QUANDO ATINGE O LIMITE FREE
+void _showLimitReachedDialog() {
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      title: Row(
+        children: [
+          Icon(Icons.warning_amber_rounded, color: Colors.orange.shade700, size: 28),
+          const SizedBox(width: 8),
+          const Text('Limite Atingido!', style: TextStyle(fontWeight: FontWeight.bold)),
+        ],
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Você usou todos os 5 QR Codes gratuitos de hoje!',
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(height: 12),
+          const Text(
+            'Para continuar gerando QR Codes ilimitados, você tem duas opções:',
+            style: TextStyle(fontSize: 14),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(color: Colors.green.shade700, shape: BoxShape.circle),
+                child: const Center(child: Text('1', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12))),
+              ),
+              const SizedBox(width: 8),
+              const Expanded(
+                child: Text('Adquira a versão Premium por apenas R\$ 29,90 (pagamento único)', style: TextStyle(fontSize: 14)),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(color: Colors.blue.shade700, shape: BoxShape.circle),
+                child: const Center(child: Text('2', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12))),
+              ),
+              const SizedBox(width: 8),
+              const Expanded(
+                child: Text('Volte amanhã para gerar mais 5 QR Codes gratuitos', style: TextStyle(fontSize: 14)),
+              ),
+            ],
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+            _scrollToDonation();
+          },
+          child: const Text('Ver Doação', style: TextStyle(color: Colors.green)),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+            _showPremiumInfoDialog();
+          },
+          child: const Text('Ser Premium ⭐', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold)),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+            _logout();
+          },
+          child: const Text('Sair', style: TextStyle(color: Colors.grey)),
+        ),
+      ],
+    ),
+  );
+}
+
+// ✅ FUNÇÃO PARA ROLAR ATÉ A SEÇÃO DE DOAÇÃO
+void _scrollToDonation() {
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 800),
+        curve: Curves.easeInOut,
+      );
+    }
+  });
+}
 
   Future<void> _copyPayload() async {
     if (_isExpired || !mounted) return;
