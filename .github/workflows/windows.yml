@@ -1,50 +1,61 @@
 name: Build All Platforms
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
 
 jobs:
   build-windows:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Configurar ambiente MSVC
-        uses: ilammy/msvc-dev-cmd@v1
+      - name: Baixar o código
+        uses: actions/checkout@v4
+        
+      - name: Instalar o Flutter
+        uses: subosito/flutter-action@v2
         with:
-          arch: x64
-
-      - uses: subosito/flutter-action@v2
-        with:
+          flutter-version: '3.29.2'
           channel: 'stable'
           
-      - run: flutter pub get
-      - run: flutter pub run flutter_launcher_icons
-      
-      - name: Build Windows FREE
+      - name: Baixar dependências
+        run: flutter pub get
+        
+      - name: Gerar ícones
+        run: flutter pub run flutter_launcher_icons
+        
+      - name: Configurar versão FREE
         run: |
           (Get-Content lib/main.dart) -replace 'IS_PREMIUM_VERSION = true', 'IS_PREMIUM_VERSION = false' | Set-Content lib/main.dart
-          flutter build windows --release
+          
+      - name: Compilar Windows FREE
+        run: flutter build windows --release
+        
+      - name: Empacotar Windows FREE
+        run: |
           Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath PixFlow_Free_Windows.zip
           
-      - uses: actions/upload-artifact@v4
+      - name: Salvar Windows FREE
+        uses: actions/upload-artifact@v4
         with:
           name: PixFlow_Free_Windows
           path: PixFlow_Free_Windows.zip
           
-      - name: Build Windows PREMIUM
+      - name: Configurar versão PREMIUM
         run: |
           (Get-Content lib/main.dart) -replace 'IS_PREMIUM_VERSION = false', 'IS_PREMIUM_VERSION = true' | Set-Content lib/main.dart
-          flutter build windows --release
+          
+      - name: Compilar Windows PREMIUM
+        run: flutter build windows --release
+        
+      - name: Empacotar Windows PREMIUM
+        run: |
           Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath PixFlow_Premium_Windows.zip
           
-      - uses: actions/upload-artifact@v4
+      - name: Salvar Windows PREMIUM
+        uses: actions/upload-artifact@v4
         with:
           name: PixFlow_Premium_Windows
           path: PixFlow_Premium_Windows.zip
-
+          
   build-android:
     runs-on: ubuntu-latest
     steps:
