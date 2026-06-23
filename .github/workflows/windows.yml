@@ -5,10 +5,16 @@ on:
 
 jobs:
   build-windows:
-    runs-on: windows-2022
+    runs-on: windows-latest
     steps:
       - name: Baixar o código
         uses: actions/checkout@v4
+
+      - name: Instalar Visual Studio 2019 Build Tools
+        shell: powershell
+        run: |
+          choco install visualstudio2019buildtools --version=16.11.39.0 -y
+          choco install visualstudio2019-workload-vctools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.Component.Windows10SDK.19041" -y
         
       - name: Instalar o Flutter
         uses: subosito/flutter-action@v2
