@@ -6,11 +6,16 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-windows:
+   build-windows:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
       
+      - name: Instalar Visual Studio 2019
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+          
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.29.2'
@@ -22,10 +27,8 @@ jobs:
       - name: Build Windows FREE
         run: |
           (Get-Content lib/main.dart) -replace 'IS_PREMIUM_VERSION = true', 'IS_PREMIUM_VERSION = false' | Set-Content lib/main.dart
-          flutter build windows --release --verbose
+          flutter build windows --release
           Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath PixFlow_Free_Windows.zip
-        env:
-          CMAKE_GENERATOR: "Visual Studio 17 2022"
           
       - uses: actions/upload-artifact@v4
         with:
@@ -35,16 +38,13 @@ jobs:
       - name: Build Windows PREMIUM
         run: |
           (Get-Content lib/main.dart) -replace 'IS_PREMIUM_VERSION = false', 'IS_PREMIUM_VERSION = true' | Set-Content lib/main.dart
-          flutter build windows --release --verbose
+          flutter build windows --release
           Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath PixFlow_Premium_Windows.zip
-        env:
-          CMAKE_GENERATOR: "Visual Studio 17 2022"
           
       - uses: actions/upload-artifact@v4
         with:
           name: PixFlow_Premium_Windows
           path: PixFlow_Premium_Windows.zip
-
   build-android:
     runs-on: ubuntu-latest
     steps:
