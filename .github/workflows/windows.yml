@@ -11,14 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Instalar Visual Studio 2019 Build Tools
-        run: |
-          choco install visualstudio2019buildtools -y
-          choco install visualstudio2019-workload-vctools -y
-      
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.29.2'
           channel: 'stable'
           
       - run: flutter pub get
