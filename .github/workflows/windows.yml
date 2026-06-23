@@ -22,8 +22,10 @@ jobs:
       - name: Build Windows FREE
         run: |
           (Get-Content lib/main.dart) -replace 'IS_PREMIUM_VERSION = true', 'IS_PREMIUM_VERSION = false' | Set-Content lib/main.dart
-          flutter build windows --release
+          flutter build windows --release --verbose
           Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath PixFlow_Free_Windows.zip
+        env:
+          CMAKE_GENERATOR: "Visual Studio 17 2022"
           
       - uses: actions/upload-artifact@v4
         with:
@@ -33,8 +35,10 @@ jobs:
       - name: Build Windows PREMIUM
         run: |
           (Get-Content lib/main.dart) -replace 'IS_PREMIUM_VERSION = false', 'IS_PREMIUM_VERSION = true' | Set-Content lib/main.dart
-          flutter build windows --release
+          flutter build windows --release --verbose
           Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath PixFlow_Premium_Windows.zip
+        env:
+          CMAKE_GENERATOR: "Visual Studio 17 2022"
           
       - uses: actions/upload-artifact@v4
         with:
