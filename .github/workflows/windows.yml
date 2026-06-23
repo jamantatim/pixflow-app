@@ -1,3 +1,11 @@
+name: Build All Platforms
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
   build-windows:
     runs-on: windows-2019
     steps:
@@ -32,7 +40,7 @@
         with:
           name: PixFlow_Premium_Windows
           path: PixFlow_Premium_Windows.zip
-          
+
   build-android:
     runs-on: ubuntu-latest
     steps:
@@ -45,7 +53,7 @@
           
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.29.2'
+          flutter-version: '3.27.4'
           channel: 'stable'
           
       - run: flutter pub get
@@ -84,7 +92,7 @@
           
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.29.2'
+          flutter-version: '3.27.4'
           channel: 'stable'
           
       - run: flutter pub get
