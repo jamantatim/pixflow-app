@@ -1,6 +1,10 @@
 # Project-level configuration.
 cmake_minimum_required(VERSION 3.14)
-project(pixflow LANGUAGES CXX)
+project(pixflow_app LANGUAGES CXX)
+
+# Forçar uso de qualquer versão do Visual Studio disponível
+set(CMAKE_GENERATOR "Ninja" CACHE STRING "" FORCE)
+set(CMAKE_CXX_COMPILER "cl.exe" CACHE STRING "" FORCE)
 
 # Permitir qualquer versão do Visual Studio
 if(MSVC)
