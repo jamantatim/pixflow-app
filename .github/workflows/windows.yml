@@ -1,61 +1,45 @@
 name: Build All Platforms
 
 on:
+  push:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
   build-windows:
     runs-on: windows-latest
     steps:
-      - name: Baixar o código
-        uses: actions/checkout@v4
-        
-      - name: Instalar o Flutter
-        uses: subosito/flutter-action@v2
+      - uses: actions/checkout@v4
+      
+      - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.29.2'
           channel: 'stable'
           
-      - name: Baixar dependências
-        run: flutter pub get
-        
-      - name: Gerar ícones
-        run: flutter pub run flutter_launcher_icons
-        
-      - name: Configurar versão FREE
+      - run: flutter pub get
+      - run: flutter pub run flutter_launcher_icons
+      
+      - name: Build Windows FREE
         run: |
           (Get-Content lib/main.dart) -replace 'IS_PREMIUM_VERSION = true', 'IS_PREMIUM_VERSION = false' | Set-Content lib/main.dart
-          
-      - name: Compilar Windows FREE
-        run: flutter build windows --release
-        
-      - name: Empacotar Windows FREE
-        run: |
+          flutter build windows --release
           Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath PixFlow_Free_Windows.zip
           
-      - name: Salvar Windows FREE
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: PixFlow_Free_Windows
           path: PixFlow_Free_Windows.zip
           
-      - name: Configurar versão PREMIUM
+      - name: Build Windows PREMIUM
         run: |
           (Get-Content lib/main.dart) -replace 'IS_PREMIUM_VERSION = false', 'IS_PREMIUM_VERSION = true' | Set-Content lib/main.dart
-          
-      - name: Compilar Windows PREMIUM
-        run: flutter build windows --release
-        
-      - name: Empacotar Windows PREMIUM
-        run: |
+          flutter build windows --release
           Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath PixFlow_Premium_Windows.zip
           
-      - name: Salvar Windows PREMIUM
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: PixFlow_Premium_Windows
           path: PixFlow_Premium_Windows.zip
-          
+
   build-android:
     runs-on: ubuntu-latest
     steps:
@@ -68,7 +52,7 @@ jobs:
           
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.29.2'
+          flutter-version: '3.27.4'
           channel: 'stable'
           
       - run: flutter pub get
@@ -100,39 +84,58 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - run: |
+    
+      # 👇 INSTALA TODAS AS DEPENDÊNCIAS
+      - name: Install Linux Dependencies
+        run: |
           sudo apt-get update
-          sudo apt-get install -y ninja-build libgtk-3-dev
-          
+          sudo apt-get install -y \
+            ninja-build \
+            libgtk-3-dev \
+            libglu1-mesa-dev \
+            libx11-dev \
+            libxrandr-dev \
+            libxcursor-dev \
+            libxinerama-dev \
+            libxi-dev \
+            libgl1-mesa-dev \
+            libblkid-dev \
+            liblzma-dev \
+            libstdc++6 \
+            libc6
+        
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.29.2'
+          flutter-version: '3.27.4'  # Use a MESMA versão do seu local
           channel: 'stable'
-          
+        
       - run: flutter pub get
       - run: flutter pub run flutter_launcher_icons
-      
+    
+      # 👇 BUILD COM VERIFICAÇÃO
       - name: Build Linux FREE
         run: |
           sed -i 's/IS_PREMIUM_VERSION = true/IS_PREMIUM_VERSION = false/' lib/main.dart
           flutter build linux --release
-          cd build/linux/x64/release/bundle
-          zip -r ../../../../../PixFlow_Free_Linux.zip .
-          
+        
+          # Verifica o que foi gerado
+          echo "Conteúdo da pasta bundle:"
+          ls -la build/linux/x64/release/bundle/
+        
+          # Verifica se o executável existe (nome do projeto)
+          if [ -f "build/linux/x64/release/bundle/pixflow" ]; then
+            echo "✅ Executável encontrado!"
+          else
+            echo "❌ Executável NÃO encontrado!"
+            exit 1
+          fi
+        
+          # Compacta
+          cd build/linux/x64/release
+          zip -r $GITHUB_WORKSPACE/PixFlow_Free_Linux.zip bundle/
+        
       - uses: actions/upload-artifact@v4
         with:
           name: PixFlow_Free_Linux
           path: PixFlow_Free_Linux.zip
-          
-      - name: Build Linux PREMIUM
-        run: |
-          sed -i 's/IS_PREMIUM_VERSION = false/IS_PREMIUM_VERSION = true/' lib/main.dart
-          flutter build linux --release
-          cd build/linux/x64/release/bundle
-          zip -r ../../../../../PixFlow_Premium_Linux.zip .
-          
-      - uses: actions/upload-artifact@v4
-        with:
-          name: PixFlow_Premium_Linux
-          path: PixFlow_Premium_Linux.zip
+  
