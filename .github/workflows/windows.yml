@@ -11,34 +11,35 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
+      - name: Configurar ambiente MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+        
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           
       - run: flutter pub get
-      - run: flutter pub run flutter_launcher_icons
+      - run: dart run flutter_launcher_icons
       
       - name: Build Windows FREE
         run: |
           (Get-Content lib/main.dart) -replace 'IS_PREMIUM_VERSION = true', 'IS_PREMIUM_VERSION = false' | Set-Content lib/main.dart
           flutter build windows --release
-          Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath PixFlow_Free_Windows.zip
           
       - uses: actions/upload-artifact@v4
         with:
           name: PixFlow_Free_Windows
-          path: PixFlow_Free_Windows.zip
+          path: build/windows/x64/runner/Release/
           
       - name: Build Windows PREMIUM
         run: |
           (Get-Content lib/main.dart) -replace 'IS_PREMIUM_VERSION = false', 'IS_PREMIUM_VERSION = true' | Set-Content lib/main.dart
           flutter build windows --release
-          Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath PixFlow_Premium_Windows.zip
           
       - uses: actions/upload-artifact@v4
         with:
           name: PixFlow_Premium_Windows
-          path: PixFlow_Premium_Windows.zip
+          path: build/windows/x64/runner/Release/
 
   build-android:
     runs-on: ubuntu-latest
