@@ -103,22 +103,18 @@ jobs:
         run: |
           sed -i 's/IS_PREMIUM_VERSION = true/IS_PREMIUM_VERSION = false/' lib/main.dart
           flutter build linux --release
-          cd build/linux/x64/release
-          zip -r $GITHUB_WORKSPACE/PixFlow_Free_Linux.zip bundle/
           
       - uses: actions/upload-artifact@v4
         with:
           name: PixFlow_Free_Linux
-          path: PixFlow_Free_Linux.zip
+          path: build/linux/x64/release/bundle/
           
       - name: Build Linux PREMIUM
         run: |
           sed -i 's/IS_PREMIUM_VERSION = false/IS_PREMIUM_VERSION = true/' lib/main.dart
           flutter build linux --release
-          cd build/linux/x64/release
-          zip -r $GITHUB_WORKSPACE/PixFlow_Premium_Linux.zip bundle/
           
       - uses: actions/upload-artifact@v4
         with:
           name: PixFlow_Premium_Linux
-          path: PixFlow_Premium_Linux.zip
+          path: build/linux/x64/release/bundle/
