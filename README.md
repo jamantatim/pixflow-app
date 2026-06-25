@@ -1,70 +1,29 @@
-# 🎨 PixFlow - Gerador de QR Code PIX
+## ⭐ Versão Premium (QR Codes Ilimitados)
 
-App profissional para gerar QR Codes PIX de forma rápida e segura!
+Quer gerar QR Codes sem limite? Adquira a versão Premium!
 
-## 📥 Downloads
+### 📱 Como Adquirir (Android)
 
-### 🆓 Versão Gratuita (5 QR Codes/dia)
+1. Faça PIX de **R$ 29,90** para:
+   - **Chave PIX**: `26558650819`
+   - **Nome**: Flaviano Antonio de Araujo
 
-| Plataforma | Download | Tamanho |
-|------------|----------|---------|
-| 🪟 Windows | [Baixar](https://github.com/jamantatim/pixflow-app/releases/latest/download/PixFlow_Free_Windows.zip) | ~12 MB |
-| 🐧 Linux | [Baixar](https://github.com/jamantatim/pixflow-app/releases/latest/download/PixFlow_Free_Linux.zip) | ~30 MB |
-| 📱 Android | [Baixar APK](https://github.com/jamantatim/pixflow-app/releases/latest/download/PixFlow_Free_Android.apk) | ~21 MB |
+2. Envie o comprovante pelo:
+   - **WhatsApp**: `(11) 98617-4159`
+   - **Email**: `vendas.neyresolve@gmail.com`
 
-### ⭐ Versão Premium (Ilimitado)
+3. Em até 24h você receberá:
+   - ✅ Link de acesso privado
+   - ✅ Instruções de instalação
+   - ✅ Suporte para dúvidas
 
-| Plataforma | Download | Tamanho |
-|------------|----------|---------|
-| 🪟 Windows | [Baixar](https://github.com/jamantatim/pixflow-app/releases/latest/download/PixFlow_Premium_Windows.zip) | ~12 MB |
-| 🐧 Linux | [Baixar](https://github.com/jamantatim/pixflow-app/releases/latest/download/PixFlow_Premium_Linux.zip) | ~30 MB |
-| 📱 Android | [Baixar APK](https://github.com/jamantatim/pixflow-app/releases/latest/download/PixFlow_Premium_Android.apk) | ~21 MB |
+### 🪟🐧 Versão Desktop Premium
 
-## 🚀 Como Instalar
+Para Windows e Linux Premium, entre em contato pelos canais acima.
 
-### 🪟 Windows
-1. Baixe o arquivo `.zip`
-2. Extraia em qualquer pasta
-3. Execute `pixflow_app.exe`
+### 🎁 Benefícios Premium
 
-### 🐧 Linux
-1. Baixe o arquivo `.zip`
-2. Extraia: `unzip PixFlow_Free_Linux.zip`
-3. Dê permissão: `chmod +x pixflow`
-4. Execute: `./pixflow`
-
-### 📱 Android
-1. Baixe o arquivo `.apk`
-2. Transfira para o celular
-3. Instale (pode precisar permitir "Fontes desconhecidas")
-4. Abra o app
-
-## 💰 Seja Premium!
-
-Apoie o desenvolvimento e tenha acesso ilimitado por apenas **R$ 29,90**!
-
-Benefícios:
-- ✅ QR Codes ilimitados
+- ✅ QR Codes **ilimitados**
 - ✅ Sem limite diário
 - ✅ Suporte prioritário
-- ✅ Atualizações gratuitas
-
-## 🐛 Reportar Problemas
-
-Encontrou um bug? [Abra uma Issue](https://github.com/jamantatim/pixflow-app/issues/new)
-
-## 💬 Comunidade
-
-Tem dúvidas ou sugestões? [Participe das Discussions](https://github.com/jamantatim/pixflow-app/discussions)
-
-## 📊 Estatísticas
-
-Veja quantas pessoas já baixaram o app: [Estatísticas de Downloads](https://github.com/jamantatim/pixflow-app/releases)
-
-## 📝 Licença
-
-Este projeto está sob a licença MIT.
-
----
-
-**Feito com ❤️ por Jamantatim**
+- ✅ Atualizações gratuitas vitalícias
