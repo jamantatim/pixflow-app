@@ -88,16 +88,28 @@ jobs:
         with:
           path: artifacts
           
-      - name: Listar arquivos baixados
-        run: ls -R artifacts
-        
+      - name: Compactar em ZIPs para Release
+        run: |
+          cd artifacts
+          # Compactar Windows
+          cd PixFlow_Free_Windows
+          zip -r ../PixFlow_Free_Windows.zip .
+          cd ..
+          # Compactar Linux
+          cd PixFlow_Free_Linux
+          zip -r ../PixFlow_Free_Linux.zip .
+          cd ..
+          # Mover Android APK
+          mv PixFlow_Free_Android/PixFlow_Free_Android.apk ../PixFlow_Free_Android.apk
+          cd ..
+          
       - name: Criar GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            artifacts/PixFlow_Free_Windows/*
-            artifacts/PixFlow_Free_Linux/*
-            artifacts/PixFlow_Free_Android/*
+            artifacts/PixFlow_Free_Windows.zip
+            artifacts/PixFlow_Free_Linux.zip
+            artifacts/PixFlow_Free_Android.apk
           generate_release_notes: true
           draft: false
           prerelease: false
